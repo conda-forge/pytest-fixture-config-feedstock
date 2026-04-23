@@ -6,24 +6,24 @@ package:
   version: "{{ version }}"
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: 41a17417721f6862ce6b40e3280fddd8e1659b2c306ec46b237d7021fec5218e
 
 build:
-  number: 0
+  number: 1
   script: "python -m pip install --no-deps --ignore-installed ."
   noarch: python
 
 requirements:
-  build:
+  host:
     - pip
     - pytest
-    - python
+    - python {{ python_min }}
     - setuptools
     - setuptools-git
   run:
     - pytest
-    - python
+    - python >={{ python_min }}
 
 test:
   imports:
@@ -31,6 +31,7 @@ test:
   requires:
     - pytest
     - six
+    - python {{ python_min }}
 
 about:
   home: https://github.com/manahl/pytest-plugins
